@@ -1,0 +1,8 @@
+---
+
+project_root: "/path/to/project"
+project_source: "{{ playbook_dir }}/.."
+builds_dir: "/path/to/project/builds"
+current_release_dir: "/path/to/project/current"
+excludes_file: "{{ playbook_dir }}/rsync_excludes"
+keep_releases: 5

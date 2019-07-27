@@ -1,0 +1,15 @@
+---
+
+- name: "Register Build Time"
+  command: date +%Y%m%d%H%M%S
+  run_once: true
+  register: build_time
+
+- set_fact:
+    build_dir: "{{ builds_dir }}/{{build_time.stdout}}"
+
+- name: "Create build directory"
+  file:
+    path: "{{ build_dir }}"
+    state: directory
+    mode: 0755

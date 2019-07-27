@@ -1,0 +1,12 @@
+---
+- hosts: web
+  vars_prompt:
+          
+  - name: "ec2_instance_id"
+    prompt: "ec2_instance_id?"
+  tasks:
+  - name: Stop myserver instance
+    ec2:
+        region: "ap-southeast-1"
+        instance_ids: "{{ec2_instance_id}}"
+        state: stopped
