@@ -1,0 +1,29 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+   - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+     user:
+       name: Devops
+       shell: /bin/bash
+       password: $5$uQxfmcBP$d9C/.KYpT84ZUYVshpreEMt5uPRxIwJ/65OWWr7BuO1
+
+   - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+     user:
+       name: tester
+       shell: /bin/bash
+
+       password: $5$uQxfmcBP$d9C/.KYpT84ZUYVshpreEMt5uPRxIwJ/65OWWr7BuO1
+   - name: Set authorized key taken from file
+     authorized_key:
+      user: Devops
+      state: present
+      key: "{{ lookup('file', 'id_rsa.pub') }}"
+
+   - name: Allow passwordless sudo in wheel group
+     lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: ‘^Devops’
+      line: '%Devops ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
